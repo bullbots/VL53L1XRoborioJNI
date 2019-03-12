@@ -3,10 +3,10 @@ import edu.wpi.first.toolchain.NativePlatforms
 
 plugins {
     id "java"
-    id 'edu.wpi.first.GradleVsCode' version '0.8.0'
+    // id 'edu.wpi.first.GradleVsCode' version '0.8.0'
     id "edu.wpi.first.GradleRIO" version "2019.3.2"
-    id "cpp"
-    id "edu.wpi.first.GradleJni" version "0.4.1"
+    // id "cpp"
+    // id "edu.wpi.first.GradleJni" version "0.4.1"
 }
 
 sourceCompatibility = JavaVersion.VERSION_11
@@ -40,12 +40,12 @@ deploy {
             targets << "roborio"
             directory = '/home/lvuser/deploy'
         }
-        nativeArtifact('vl53l1x_i2c') {
-            targetPlatform = NativePlatforms.roborio
-            targets << "roborio"
-            directory = FRCPlugin.LIB_DEPLOY_DIR
-            buildType = 'release'
-        }
+        // nativeArtifact('vl53l1x_i2c') {
+        //     targetPlatform = NativePlatforms.roborio
+        //     targets << "roborio"
+        //     directory = FRCPlugin.LIB_DEPLOY_DIR
+        //     buildType = 'release'
+        // }
     }
 }
 
@@ -63,7 +63,7 @@ dependencies {
     compile wpi.deps.wpilib()
     compile wpi.deps.vendor.java()
     nativeZip wpi.deps.vendor.jni(wpi.platforms.roborio)
-    nativeDesktopZip wpi.deps.vendor.jni(wpi.platforms.desktop)
+    // nativeDesktopZip wpi.deps.vendor.jni(wpi.platforms.desktop)
     testCompile 'junit:junit:4.12'
 }
 
@@ -75,33 +75,36 @@ jar {
     manifest edu.wpi.first.gradlerio.GradleRIOPlugin.javaManifest(ROBOT_MAIN_CLASS)
 }
 
-model {
-    components {
-        vl53l1x_i2c(JniNativeLibrarySpec) { // Use JniNativeLibrarySpec to get a JNI library
-            targetPlatform wpi.platforms.roborio
-            enableCheckTask true // Set to true to enable a JNI check task. This will search all generated JNI headers, and check to ensure their symbols exist in the native library
-            javaCompileTasks << compileJava // set javaCompileTasks to any java compile tasks that contain your JNI classes. It is a list of tasks
-            jniCrossCompileOptions << JniCrossCompileOptions(wpi.platforms.roborio)
+// model {
+//     components {
+//         vl53l1x_i2c(JniNativeLibrarySpec) { // Use JniNativeLibrarySpec to get a JNI library
+//             targetPlatform wpi.platforms.roborio
+//             enableCheckTask true // Set to true to enable a JNI check task. This will search all generated JNI headers, and check to ensure their symbols exist in the native library
+//             javaCompileTasks << compileJava // set javaCompileTasks to any java compile tasks that contain your JNI classes. It is a list of tasks
+//             jniCrossCompileOptions << JniCrossCompileOptions(wpi.platforms.roborio)
 
-            binaries.all {
-                cppCompiler.args '-g', '-Wall', '-D__LINUX__'
-            }
+//             binaries.all {
+//                 cppCompiler.args '-g', '-Wall', '-D__LINUX__'
+//             }
 
-            sources.cpp {
-                source {
-                    srcDir 'src/main/jni/cpp'
-                    include '**/*.cpp', '**/*.c'
-                }
-                exportedHeaders {
-                    srcDir 'src/main/jni/include'
-                    if (project.hasProperty('generatedHeaders')) {
-                        srcDir generatedHeaders
-                    }
-                    include '**/*.h'
-                }
-            }
-            // Defining my dependencies. In this case, WPILib (+ friends), and vendor libraries.
-            useLibrary(it, "wpilib")
-        }
-    }
-}
+//             sources.cpp {
+//                 source {
+//                     srcDir 'src/main/jni/cpp'
+//                     include '**/*.cpp', '**/*.c'
+//                 }
+//                 exportedHeaders {
+//                     srcDir 'src/main/jni/include'
+//                     if (project.hasProperty('generatedHeaders')) {
+//                         srcDir generatedHeaders
+//                     }
+//                     include '**/*.h'
+//                 }
+//             }
+//             // Defining my dependencies. In this case, WPILib (+ friends), and vendor libraries.
+//             useLibrary(it, "wpilib")
+//         }
+//     }
+// }
+// https://github.com/warrenlp/VL53L1XRoborioJNI/raw/repository/maven/org/github/warrenlp/vl53l1x_i2c-java/2019-1/
+// https://github.com/warrenlp/VL53L1XRoborioJNI/raw/repository/maven/org/github/warrenlp/vl53l1x_i2c-java/2019-1/vl53l1x_i2c-java-2019-1.jar
+// https://github.com/warrenlp/VL53L1XRoborioJNI/raw/repository/maven/com/github/warrenlp/vl53l1x_i2c-java/2019-1/vl53l1x_i2c-java-2019-1.jar

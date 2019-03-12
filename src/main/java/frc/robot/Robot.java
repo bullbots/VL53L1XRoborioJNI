@@ -7,6 +7,8 @@
 
 package frc.robot;
 
+import com.github.warrenlp.VL53L1X_JNI_I2C;
+
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -14,7 +16,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.subsystems.ExampleSubsystem;
-import frc.robot.vl53l1x.VL53L1X_JNI_I2C;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -37,10 +38,6 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
-    System.out.println("Starting VL53L1X:");
-    Thread vl53l1xThread = new Thread(vl53l1x_jni_i2c);
-    vl53l1xThread.setDaemon(true);
-    vl53l1xThread.start();
 
     m_oi = new OI();
     m_chooser.setDefaultOption("Default Auto", new ExampleCommand());

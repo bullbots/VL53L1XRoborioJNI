@@ -55,6 +55,12 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotPeriodic() {
+    int[] distances = vl53l1x_jni_i2c.distanceBuffer.poll();
+    if (distances != null) {
+      for (int distance : distances) {
+        System.out.println(String.format("INFO: VL53L1X Distance: %04d", distance));
+      }
+    }
   }
 
   /**
